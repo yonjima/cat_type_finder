@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Embed テスト - 猫タイプ診断</title>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #36393f;
+            color: #dcddde;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .discord-embed-preview {
+            background: #2f3136;
+            border-left: 4px solid #ff7675;
+            border-radius: 4px;
+            padding: 16px;
+            max-width: 432px;
+            margin: 20px 0;
+        }
+        
+        .embed-author {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .embed-title {
+            color: #00b0f4;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 8px;
+            text-decoration: none;
+        }
+        
+        .embed-title:hover {
+            text-decoration: underline;
+        }
+        
+        .embed-description {
+            color: #dcddde;
+            font-size: 14px;
+            line-height: 1.375;
+            margin-bottom: 8px;
+        }
+        
+        .embed-thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: 4px;
+            float: right;
+            margin-left: 16px;
+            object-fit: cover;
+        }
+        
+        .embed-image {
+            max-width: 400px;
+            max-height: 300px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+        
+        .embed-footer {
+            font-size: 12px;
+            color: #72767d;
+            margin-top: 8px;
+        }
+        
+        .instructions {
+            background: #4f545c;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .code {
+            background: #2f3136;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: #f8f8f2;
+            font-size: 14px;
+        }
+        
+        h1 {
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+        
+        h2 {
+            color: #ffffff;
+            margin: 24px 0 12px 0;
+        }
+        
+        .test-links {
+            margin: 20px 0;
+        }
+        
+        .test-links a {
+            display: block;
+            color: #00b0f4;
+            text-decoration: none;
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: #2f3136;
+            border-radius: 4px;
+        }
+        
+        .test-links a:hover {
+            background: #36393f;
+        }
+    </style>
+</head>
+<body>
+    <h1>🐾 Discord Embed テスト - 猫タイプ診断</h1>
+    
+    <div class="instructions">
+        <h2>Discord でのテスト方法</h2>
+        <p>1. 以下のリンクをDiscordのチャンネルに貼り付けてください</p>
+        <div class="code">https://yourdomain.github.io/claude_cat_type_finder/</div>
+        
+        <p style="margin-top: 16px;">2. または、Discord Embed Validatorでテスト:</p>
+        <div class="test-links">
+            <a href="https://discord.com/developers/docs/resources/channel#embed-object" target="_blank">
+                📖 Discord Embed Documentation
+            </a>
+            <a href="https://cog-creators.github.io/discord-embed-sandbox/" target="_blank">
+                🛠️ Discord Embed Sandbox
+            </a>
+        </div>
+    </div>
+    
+    <h2>期待されるDiscord Embed表示</h2>
+    
+    <div class="discord-embed-preview">
+        <a href="https://yourdomain.github.io/claude_cat_type_finder/" class="embed-title">
+            🐾 猫タイプ診断 - あなたはどの猫タイプ？
+        </a>
+        <div class="embed-description">
+            7つの質問であなたにぴったりの猫タイプを診断！ラグドール、シャム、ベンガルなど21種類の猫種から最適なマッチを見つけて、あなたの性格に合った猫ちゃんを発見しましょう🐱✨
+        </div>
+        <img src="ogp-image.png" alt="猫タイプ診断" class="embed-image">
+        <div class="embed-footer">猫タイプ診断</div>
+    </div>
+    
+    <div class="instructions">
+        <h2>Discord対応の特徴</h2>
+        <ul>
+            <li>✅ <strong>theme-color</strong>: Embedの左側のカラーバーが #ff7675 (ピンク)</li>
+            <li>✅ <strong>OGP画像</strong>: 1200x675px のピクセルアート画像</li>
+            <li>✅ <strong>タイトル</strong>: クリック可能なリンクとして表示</li>
+            <li>✅ <strong>説明文</strong>: 絵文字付きで魅力的な説明</li>
+            <li>✅ <strong>サイト名</strong>: フッターに "猫タイプ診断" 表示</li>
+        </ul>
+        
+        <h2>トラブルシューティング</h2>
+        <ul>
+            <li>🔄 Embedが表示されない場合: URLを再投稿してください</li>
+            <li>🖼️ 画像が表示されない場合: ogp-image.png のパスを確認</li>
+            <li>⏱️ 更新に時間がかかる場合: Discord は OGP をキャッシュします</li>
+        </ul>
+    </div>
+    
+    <div class="instructions">
+        <h2>Discord でのベストプラクティス</h2>
+        <ul>
+            <li><strong>画像サイズ</strong>: 1200x675px (16:9比率) が推奨</li>
+            <li><strong>ファイルサイズ</strong>: 画像は8MB以下にする</li>
+            <li><strong>タイトル長</strong>: 65文字以内が切り捨てされずに表示</li>
+            <li><strong>説明文長</strong>: 200文字程度が読みやすい</li>
+        </ul>
+    </div>
+</body>
+</html>

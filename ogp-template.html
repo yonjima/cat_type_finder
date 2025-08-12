@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGP画像テンプレート</title>
+    <style>
+        .ogp-container {
+            width: 1200px;
+            height: 630px;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Yu Gothic', 'Hiragino Sans', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content {
+            text-align: center;
+            color: #2d3436;
+            z-index: 2;
+        }
+        
+        .main-title {
+            font-size: 72px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .sub-title {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #636e72;
+        }
+        
+        .cat-types {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 800px;
+        }
+        
+        .cat-type {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .decorative-cats {
+            position: absolute;
+            font-size: 120px;
+            opacity: 0.1;
+        }
+        
+        .cat-1 { top: 50px; left: 50px; }
+        .cat-2 { top: 50px; right: 50px; }
+        .cat-3 { bottom: 50px; left: 50px; }
+        .cat-4 { bottom: 50px; right: 50px; }
+        
+        .badge {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            background: #ff7675;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="ogp-container">
+        <div class="decorative-cats cat-1">🐱</div>
+        <div class="decorative-cats cat-2">🐾</div>
+        <div class="decorative-cats cat-3">😺</div>
+        <div class="decorative-cats cat-4">🐈</div>
+        
+        <div class="badge">無料診断</div>
+        
+        <div class="content">
+            <h1 class="main-title">🐾 猫タイプ診断</h1>
+            <p class="sub-title">あなたはどの猫タイプ？</p>
+            
+            <div class="cat-types">
+                <span class="cat-type">ラグドール</span>
+                <span class="cat-type">シャム</span>
+                <span class="cat-type">ベンガル</span>
+                <span class="cat-type">スフィンクス</span>
+                <span class="cat-type">メインクーン</span>
+                <span class="cat-type">ペルシャ</span>
+                <span class="cat-type">和猫</span>
+                <span class="cat-type">など21種類</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- このHTMLをブラウザで開いて、1200x630pxでスクリーンショットを取得してogp-image.jpgとして保存してください -->
+</body>
+</html>
