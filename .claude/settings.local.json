@@ -4,7 +4,8 @@
       "Bash(start:*)",
       "Bash(cmd /c start:*)",
       "Bash(explorer:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(cp:*)"
     ],
     "deny": []
   }

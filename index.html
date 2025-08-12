@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐾 猫タイプ診断</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .quiz-container {
+            padding: 30px;
+        }
+
+        .question {
+            display: none;
+            margin-bottom: 30px;
+        }
+
+        .question.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question h3 {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            color: #2d3436;
+        }
+
+        .options {
+            list-style: none;
+        }
+
+        .options li {
+            margin-bottom: 10px;
+        }
+
+        .options button {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 1em;
+        }
+
+        .options button:hover {
+            border-color: #ff7675;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #ff7675, #fd79a8);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .result {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .result.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .cat-emoji {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .cat-image {
+            width: 280px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            display: block;
+            border: 4px solid #ff7675;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .cat-type {
+            font-size: 2em;
+            color: #ff7675;
+            margin-bottom: 15px;
+        }
+
+        .cat-summary {
+            font-size: 1.3em;
+            color: #2d3436;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .cat-keywords {
+            font-size: 1.1em;
+            color: #636e72;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .restart-btn {
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #ff7675, #fd79a8);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+            min-width: 200px;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 118, 117, 0.3);
+        }
+
+        .share-buttons {
+            margin: 30px 0;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            color: white;
+            min-width: 160px;
+            justify-content: center;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .x-btn {
+            background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
+        }
+
+        .threads-btn {
+            background: linear-gradient(135deg, #000, #333);
+        }
+
+        .share-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .restart-btn {
+            margin-top: 25px;
+        }
+
+        .question-counter {
+            text-align: center;
+            color: #636e72;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        /* スマホ対応のレスポンシブデザイン */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                margin: 0;
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+                margin-bottom: 8px;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .quiz-container {
+                padding: 20px;
+            }
+
+            .question h3 {
+                font-size: 1.2em;
+                margin-bottom: 15px;
+            }
+
+            .options button {
+                padding: 12px;
+                font-size: 0.9em;
+            }
+
+            .cat-image {
+                width: 220px;
+                height: 220px;
+                margin-bottom: 15px;
+            }
+
+            .cat-type {
+                font-size: 1.6em;
+                margin-bottom: 12px;
+            }
+
+            .cat-summary {
+                font-size: 1.1em;
+                margin-bottom: 12px;
+            }
+
+            .cat-keywords {
+                font-size: 1em;
+                margin-bottom: 25px;
+            }
+
+            .share-buttons {
+                flex-direction: column;
+                gap: 15px;
+                margin: 25px 0;
+            }
+
+            .share-btn {
+                min-width: 200px;
+                padding: 12px 25px;
+            }
+
+            .restart-btn {
+                padding: 15px 35px;
+                font-size: 1.1em;
+                margin-top: 20px;
+            }
+
+            .result {
+                padding: 20px;
+            }
+        }
+
+        /* 小さなスマホ画面対応 */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .question h3 {
+                font-size: 1.1em;
+            }
+
+            .cat-image {
+                width: 180px;
+                height: 180px;
+            }
+
+            .cat-type {
+                font-size: 1.4em;
+            }
+
+            .cat-summary {
+                font-size: 1em;
+            }
+
+            .cat-keywords {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐾 猫タイプ診断</h1>
+            <p>7つの質問であなたの猫タイプを診断します</p>
+        </div>
+
+        <div class="quiz-container">
+            <div class="question-counter">
+                <span id="current-question">1</span> / 7
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+
+            <!-- 質問1 -->
+            <div class="question active" data-question="1">
+                <h3>Q1. 初対面の人に会ったとき、どうしますか？</h3>
+                <ul class="options">
+                    <li><button onclick="answer(1, 'sociability', 5, 'cautiousness', 1)">A：すぐ近づいて挨拶する</button></li>
+                    <li><button onclick="answer(1, 'sociability', 3, 'cautiousness', 3)">B：少し様子を見てから近づく</button></li>
+                    <li><button onclick="answer(1, 'sociability', 2, 'cautiousness', 5)">C：しばらく隠れて様子を見る</button></li>
+                </ul>
+            </div>
+
+            <!-- 質問2 -->
+            <div class="question" data-question="2">
+                <h3>Q2. 休日や空き時間はどう過ごすのが好き？</h3>
+                <ul class="options">
+                    <li><button onclick="answer(2, 'activity', 5, 'intellectual_needs', 4)">A：アクティブに動き回る</button></li>
+                    <li><button onclick="answer(2, 'activity', 3, 'intellectual_needs', 3)">B：少し動いてあとはのんびり</button></li>
+                    <li><button onclick="answer(2, 'activity', 1, 'intellectual_needs', 2)">C：ほぼ寝て過ごす</button></li>
+                </ul>
+            </div>
+
+            <!-- 質問3 -->
+            <div class="question" data-question="3">
+                <h3>Q3. 飼い主や友達が帰ってきたら？</h3>
+                <ul class="options">
+                    <li><button onclick="answer(3, 'affection', 5, 'independence', 2)">A：すぐ駆け寄って甘える</button></li>
+                    <li><button onclick="answer(3, 'affection', 3, 'independence', 3)">B：近くまで行って軽く挨拶</button></li>
+                    <li><button onclick="answer(3, 'affection', 1, 'independence', 5)">C：ほとんど反応しない</button></li>
+                </ul>
+            </div>
+
+            <!-- 質問4 -->
+            <div class="question" data-question="4">
+                <h3>Q4. おしゃべり（鳴き声）はどのくらい？</h3>
+                <ul class="options">
+                    <li><button onclick="answer(4, 'chattiness', 5, 'sociability', 4)">A：よく話しかける（鳴く）</button></li>
+                    <li><button onclick="answer(4, 'chattiness', 3, 'sociability', 3)">B：必要なときだけ鳴く</button></li>
+                    <li><button onclick="answer(4, 'chattiness', 1, 'sociability', 2)">C：ほぼ鳴かない</button></li>
+                </ul>
+            </div>
+
+            <!-- 質問5 -->
+            <div class="question" data-question="5">
+                <h3>Q5. 新しいことや刺激についてどう思う？</h3>
+                <ul class="options">
+                    <li><button onclick="answer(5, 'intellectual_needs', 5, 'activity', 4)">A：新しいことが大好き</button></li>
+                    <li><button onclick="answer(5, 'intellectual_needs', 3, 'activity', 3)">B：時々なら楽しい</button></li>
+                    <li><button onclick="answer(5, 'intellectual_needs', 1, 'activity', 2)">C：いつもと同じが一番</button></li>
+                </ul>
+            </div>
+
+            <!-- 質問6 -->
+            <div class="question" data-question="6">
+                <h3>Q6. 1人の時間についてどう感じる？</h3>
+                <ul class="options">
+                    <li><button onclick="answer(6, 'independence', 5, 'affection', 2)">A：1人の時間が大好き</button></li>
+                    <li><button onclick="answer(6, 'independence', 3, 'affection', 3)">B：1人もみんなでもどちらでも</button></li>
+                    <li><button onclick="answer(6, 'independence', 1, 'affection', 5)">C：いつも誰かと一緒にいたい</button></li>
+                </ul>
+            </div>
+
+            <!-- 質問7 -->
+            <div class="question" data-question="7">
+                <h3>Q7. スキンシップや甘えることについては？</h3>
+                <ul class="options">
+                    <li><button onclick="answer(7, 'affection', 5, 'independence', 2)">A：いつでもべったり甘えたい</button></li>
+                    <li><button onclick="answer(7, 'affection', 3, 'independence', 3)">B：気が向いた時に甘える</button></li>
+                    <li><button onclick="answer(7, 'affection', 1, 'independence', 4)">C：あまり甘えない</button></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 結果表示 -->
+        <div class="result" id="result">
+            <img class="cat-image" id="cat-image" src="" alt="猫の画像" style="display: none;">
+            <div class="cat-emoji" id="cat-emoji">🐱</div>
+            <div class="cat-type" id="cat-type">診断中...</div>
+            <div class="cat-summary" id="cat-summary">あなたの猫タイプを分析しています...</div>
+            <div class="cat-keywords" id="cat-keywords"></div>
+            
+            <div class="share-buttons">
+                <a href="#" class="share-btn x-btn" id="x-share-btn" target="_blank">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                    Xでシェア
+                </a>
+                <a href="#" class="share-btn threads-btn" id="threads-share-btn" target="_blank">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.5 12.068c0-3.518.85-6.373 2.495-8.424C5.845 1.205 8.598.024 12.179 0h.007c3.581.024 6.334 1.205 8.184 3.509C21.65 5.56 22.5 8.414 22.5 11.932c0 3.518-.85 6.373-2.495 8.424C18.155 22.795 15.402 23.976 12.186 24zM12.179 2c-2.757.02-4.852.828-6.217 2.407C4.6 6.012 3.5 8.302 3.5 12.068s1.1 6.056 2.462 7.661c1.365 1.579 3.46 2.388 6.217 2.407h.007c2.757-.02 4.852-.828 6.217-2.407C19.4 17.994 20.5 15.704 20.5 11.938s-1.1-6.056-2.462-7.661C16.673 2.698 14.578 1.89 11.821 1.87h-.007z"/>
+                        <path d="M8 12h3.5c1.933 0 3.5-1.567 3.5-3.5S13.433 5 11.5 5H8v7zm0-5h3.5c.827 0 1.5.673 1.5 1.5S12.327 10 11.5 10H8V7zm0 5h4c2.209 0 4 1.791 4 4s-1.791 4-4 4H8v-8zm0 6h4c1.103 0 2-.897 2-2s-.897-2-2-2H8v4z"/>
+                    </svg>
+                    Threadsでシェア
+                </a>
+            </div>
+            
+            <button class="restart-btn" onclick="restart()">もう一度診断する</button>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        let scores = {
+            sociability: 0,
+            activity: 0,
+            affection: 0,
+            chattiness: 0,
+            independence: 0,
+            cautiousness: 0,
+            intellectual_needs: 0
+        };
+
+        const catTypes = {
+            'ラグドール（Ragdoll）': {
+                emoji: '🐱',
+                image: 'ChatGPT Image_ Ragdoll.png',
+                summary: '"ぬいぐるみ系"。落ち着いた相棒タイプ。',
+                keywords: 'おだやか／抱っこ好き／人懐っこい性格です。',
+                scores: { sociability: 5, activity: 2, affection: 4, chattiness: 2, independence: 2, cautiousness: 2, intellectual_needs: 3 }
+            },
+            'ペルシャ（Persian）': {
+                emoji: '👑',
+                image: 'ChatGPT Image_Persian.png',
+                summary: '優雅で穏やか、ルーティン派。',
+                keywords: '静か／マイペース／規則好きな上品な性格です。',
+                scores: { sociability: 3, activity: 1, affection: 3, chattiness: 1, independence: 3, cautiousness: 3, intellectual_needs: 2 }
+            },
+            'メインクーン（Maine Coon）': {
+                emoji: '🦁',
+                image: 'ChatGPT Image_Maine Coon.png',
+                summary: '大柄でもフレンドリー。家族と仲良し。',
+                keywords: '社交的／やさしい巨人／遊び好きです。',
+                scores: { sociability: 5, activity: 4, affection: 3, chattiness: 2, independence: 3, cautiousness: 2, intellectual_needs: 4 }
+            },
+            'シャム（Siamese）': {
+                emoji: '🗣️',
+                image: 'ChatGPT Image_Siamese.png',
+                summary: '人に話しかける"会話好き"タイプ。',
+                keywords: 'おしゃべり／甘えん坊／知的な性格です。',
+                scores: { sociability: 5, activity: 4, affection: 5, chattiness: 5, independence: 2, cautiousness: 2, intellectual_needs: 5 }
+            },
+            'ベンガル（Bengal）': {
+                emoji: '🐆',
+                image: 'ChatGPT Image Bengal.png',
+                summary: '刺激を求めるアスリート系。',
+                keywords: '活発／好奇心旺盛／賢い冒険家タイプです。',
+                scores: { sociability: 4, activity: 5, affection: 3, chattiness: 3, independence: 3, cautiousness: 2, intellectual_needs: 5 }
+            },
+            'スフィンクス（Sphynx）': {
+                emoji: '🤗',
+                image: 'ChatGPT Image Sphynx.png',
+                summary: 'スキンシップ命の"犬っぽい猫"。',
+                keywords: '超社交的／べったり／活動的な性格です。',
+                scores: { sociability: 5, activity: 4, affection: 5, chattiness: 3, independence: 2, cautiousness: 2, intellectual_needs: 4 }
+            },
+            'アビシニアン（Abyssinian）': {
+                emoji: '🧗',
+                image: 'ChatGPT Image_Abyssinian.png',
+                summary: '高い所＆新しい体験が大好物。',
+                keywords: '探検家／機敏／陽気な冒険者です。',
+                scores: { sociability: 4, activity: 5, affection: 3, chattiness: 3, independence: 3, cautiousness: 2, intellectual_needs: 5 }
+            },
+            'スノーシュー（Snowshoe）': {
+                emoji: '🎓',
+                image: 'ChatGPT Image_Snowshoe.png',
+                summary: 'トリック習得も得意な良き相棒。',
+                keywords: '甘えん坊／バランス型／学習好きです。',
+                scores: { sociability: 4, activity: 3, affection: 4, chattiness: 3, independence: 3, cautiousness: 2, intellectual_needs: 4 }
+            },
+            'ボンベイ（Bombay）': {
+                emoji: '🏠',
+                image: 'ChatGPT Image_Bombay.png',
+                summary: '家族とずっと一緒にいたいタイプ。',
+                keywords: '人中心／落ち着き／室内向きです。',
+                scores: { sociability: 4, activity: 2, affection: 4, chattiness: 2, independence: 2, cautiousness: 2, intellectual_needs: 3 }
+            },
+            'ロシアンブルー（Russian Blue）': {
+                emoji: '🤫',
+                image: 'ChatGPT Image_Russian Blue.png',
+                summary: '打ち解けると一途な"静かな友"。',
+                keywords: '慎重／誠実／静けさ好きです。',
+                scores: { sociability: 3, activity: 2, affection: 3, chattiness: 2, independence: 3, cautiousness: 5, intellectual_needs: 3 }
+            },
+            'ブリティッシュショートヘア（British Shorthair）': {
+                emoji: '🎩',
+                image: 'ChatGPT Image_British Shorthair.png',
+                summary: '過度にべたべたせず上品に甘える。',
+                keywords: 'おだやか／どっしり／独立心がある品格派。',
+                scores: { sociability: 3, activity: 2, affection: 2, chattiness: 2, independence: 4, cautiousness: 3, intellectual_needs: 2 }
+            },
+            'スコティッシュフォールド': {
+                emoji: '😊',
+                image: 'ChatGPT Image_Scottish Fold.png',
+                summary: '穏やかで家族に寄り添う。',
+                keywords: 'やさしい／柔和／適応力のある癒し系です。',
+                scores: { sociability: 4, activity: 2, affection: 3, chattiness: 2, independence: 3, cautiousness: 3, intellectual_needs: 3 }
+            },
+            'アメリカンショートヘア（american shorthair）': {
+                emoji: '⚖️',
+                image: 'ChatGPT Image_american shorthair.png',
+                summary: '遊びも休憩もバランス良し。',
+                keywords: '明るい／タフ／適応力のあるオールラウンダーです。',
+                scores: { sociability: 4, activity: 3, affection: 3, chattiness: 2, independence: 3, cautiousness: 2, intellectual_needs: 3 }
+            },
+            'ノルウェージャンフォレストキャット（Norwegian Forest Cat）': {
+                emoji: '🌲',
+                image: 'ChatGPT Image_Norwegian Forest Cat.png',
+                summary: '静かな時間と運動の両立派。',
+                keywords: '自然児／落ち着き／運動好きです。',
+                scores: { sociability: 3, activity: 4, affection: 2, chattiness: 2, independence: 3, cautiousness: 3, intellectual_needs: 4 }
+            },
+            'ターキッシュアンゴラ（Turkish Angora）': {
+                emoji: '💃',
+                image: 'ChatGPT Image_Turkish Angora.png',
+                summary: '運動能力高めのエレガント系。',
+                keywords: '気品／活発／賢い優雅なアスリートです。',
+                scores: { sociability: 4, activity: 4, affection: 3, chattiness: 3, independence: 3, cautiousness: 3, intellectual_needs: 4 }
+            },
+            'ターキッシュバン（Turkish Van）': {
+                emoji: '🏊',
+                image: 'ChatGPT Image_Turkish Van.png',
+                summary: '"泳ぐ猫"。刺激を求めるタイプ。',
+                keywords: '水遊び好き／自立心／冒険家です。',
+                scores: { sociability: 3, activity: 5, affection: 2, chattiness: 2, independence: 4, cautiousness: 3, intellectual_needs: 4 }
+            },
+            'バーミーズ（Burmese）': {
+                emoji: '🤗',
+                image: 'ChatGPT Image_Burmese.png',
+                summary: '始終そばにいたい"密着系"。',
+                keywords: '超人懐っこい／甘えん坊／社交的です。',
+                scores: { sociability: 5, activity: 3, affection: 5, chattiness: 3, independence: 2, cautiousness: 2, intellectual_needs: 4 }
+            },
+            'トンキニーズ（Tonkinese）': {
+                emoji: '🎉',
+                image: 'ChatGPT Image_ Tonkinese.png',
+                summary: '来客とも仲良くなれるムードメーカー。',
+                keywords: '陽気／おしゃべり／好奇心旺盛です。',
+                scores: { sociability: 5, activity: 4, affection: 4, chattiness: 4, independence: 2, cautiousness: 2, intellectual_needs: 4 }
+            },
+            'オリエンタルショートヘア（Oriental Shorthair）': {
+                emoji: '🎭',
+                image: 'ChatGPT Image_Oriental Shorthair.png',
+                summary: '注目されたい"表現者"。',
+                keywords: '外向的／声でアピール／繊細な芸術家タイプです。',
+                scores: { sociability: 5, activity: 4, affection: 4, chattiness: 5, independence: 2, cautiousness: 2, intellectual_needs: 5 }
+            },
+            'デボンレックス（Devon Rex）': {
+                emoji: '🎮',
+                image: 'ChatGPT Image_Devon Rex.png',
+                summary: '人と遊ぶのが何よりのご褒美。',
+                keywords: '活発／いたずら好き／学習意欲旺盛です。',
+                scores: { sociability: 5, activity: 5, affection: 4, chattiness: 3, independence: 2, cautiousness: 2, intellectual_needs: 5 }
+            },
+            '和猫（日本猫・Japanese cat）': {
+                emoji: '🏯',
+                images: [
+                    'ChatGPT Image_Japanese Cat_三毛猫.png',
+                    'ChatGPT Image_Japanese Cat_キジトラ01.png',
+                    'ChatGPT Image_Japanese Cat_キジトラ02.png',
+                    'ChatGPT Image_Japanese Cat_キジトラ03.png',
+                    'ChatGPT Image_Japanese Cat_サビ猫.png',
+                    'ChatGPT Image_Japanese Cat_茶トラ.png',
+                    'ChatGPT Image__Japanese Cat_ハチワレ猫.png',
+                    'ChatGPT Image__Japanese Cat_黒猫.png'
+                ],
+                image: 'ChatGPT Image_Japanese Cat_三毛猫.png', // デフォルト用
+                summary: '昔ながらの家猫。環境に合わせて自在に生きる。',
+                keywords: '賢い／順応性高い／多様な性格です。',
+                scores: { sociability: 4, activity: 3, affection: 3, chattiness: 3, independence: 3, cautiousness: 3, intellectual_needs: 3 }
+            }
+        };
+
+        function answer(questionNum, category1, points1, category2, points2) {
+            scores[category1] += points1;
+            if (category2 && points2 !== undefined) {
+                scores[category2] += points2;
+            }
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            document.querySelector(`[data-question="${currentQuestion}"]`).classList.remove('active');
+            currentQuestion++;
+
+            const progressPercent = ((currentQuestion - 1) / 7) * 100;
+            document.getElementById('progress-fill').style.width = progressPercent + '%';
+
+            if (currentQuestion <= 7) {
+                document.getElementById('current-question').textContent = currentQuestion;
+                setTimeout(() => {
+                    document.querySelector(`[data-question="${currentQuestion}"]`).classList.add('active');
+                }, 300);
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.querySelector('.quiz-container').style.display = 'none';
+            
+            const catType = determineCatType();
+            
+            // 猫の画像を表示
+            const catImage = document.getElementById('cat-image');
+            
+            // 和猫（日本猫）の場合はランダムに画像を選択
+            let selectedImage;
+            if (catType === '和猫（日本猫・Japanese cat）' && catTypes[catType].images) {
+                const randomIndex = Math.floor(Math.random() * catTypes[catType].images.length);
+                selectedImage = catTypes[catType].images[randomIndex];
+                console.log('Selected Japanese cat image:', selectedImage);
+            } else {
+                selectedImage = catTypes[catType].image;
+            }
+            
+            // エラー時の代替処理を追加
+            catImage.onerror = function() {
+                console.log('Image failed to load:', selectedImage);
+                this.style.display = 'none';
+                document.getElementById('cat-emoji').style.fontSize = '6em';
+            };
+            
+            const imagePath = `images/cat_image_21type/${selectedImage}`;
+            catImage.src = imagePath;
+            catImage.style.display = 'block';
+            
+            document.getElementById('cat-emoji').style.display = 'none';
+            document.getElementById('cat-type').textContent = `あなたは${catType}タイプ！`;
+            document.getElementById('cat-summary').textContent = catTypes[catType].summary;
+            document.getElementById('cat-keywords').textContent = catTypes[catType].keywords;
+            
+            // シェアボタンのリンクを更新
+            updateShareButtons(catType);
+            
+            document.getElementById('result').classList.add('active');
+        }
+
+        function determineCatType() {
+            // デバッグ：生スコアを表示
+            console.log('Raw scores:', scores);
+            
+            // スコアを1-5の範囲に正規化（各カテゴリの最大値に基づいて調整）
+            const maxPossibleScore = Math.max(...Object.values(scores));
+            const normalizedScores = {};
+            
+            for (const [category, score] of Object.entries(scores)) {
+                // より動的な正規化：実際の最大スコアが10を超える場合に対応
+                if (maxPossibleScore > 0) {
+                    normalizedScores[category] = Math.min(5, Math.max(1, Math.round((score / maxPossibleScore) * 4 + 1)));
+                } else {
+                    normalizedScores[category] = 3; // デフォルト値
+                }
+            }
+            
+            console.log('Normalized scores:', normalizedScores);
+
+            let bestMatch = '';
+            let smallestDistance = Infinity;
+            const results = [];
+
+            // 各猫タイプとの距離を計算して最も近いものを選択
+            for (const [catType, data] of Object.entries(catTypes)) {
+                let distance = 0;
+                
+                for (const [category, targetScore] of Object.entries(data.scores)) {
+                    const userScore = normalizedScores[category] || 3; // デフォルト値
+                    distance += Math.abs(userScore - targetScore);
+                }
+                
+                results.push({ catType, distance });
+                
+                if (distance < smallestDistance) {
+                    smallestDistance = distance;
+                    bestMatch = catType;
+                }
+            }
+            
+            // デバッグ：上位5つの結果を表示
+            results.sort((a, b) => a.distance - b.distance);
+            console.log('Top 5 matches:', results.slice(0, 5));
+            console.log('Best match:', bestMatch);
+
+            return bestMatch || 'アメリカンショートヘア（american shorthair）';
+        }
+
+        function updateShareButtons(catType) {
+            const shareText = `🐾 猫タイプ診断結果 🐾\n私は${catType}タイプでした！\n${catTypes[catType].summary} ${catTypes[catType].keywords}\n\n#猫タイプ診断`;
+            const url = window.location.href;
+            
+            // X（旧Twitter）のシェアリンク
+            const xShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`;
+            document.getElementById('x-share-btn').href = xShareUrl;
+            
+            // Threadsのシェアリンク
+            const threadsShareUrl = `https://www.threads.net/intent/post?text=${encodeURIComponent(shareText + ' ' + url)}`;
+            document.getElementById('threads-share-btn').href = threadsShareUrl;
+        }
+
+        function restart() {
+            currentQuestion = 1;
+            scores = {
+                sociability: 0,
+                activity: 0,
+                affection: 0,
+                chattiness: 0,
+                independence: 0,
+                cautiousness: 0,
+                intellectual_needs: 0
+            };
+
+            document.getElementById('result').classList.remove('active');
+            document.querySelector('.quiz-container').style.display = 'block';
+            document.getElementById('current-question').textContent = '1';
+            document.getElementById('progress-fill').style.width = '0%';
+
+            document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+            document.querySelector('[data-question="1"]').classList.add('active');
+        }
+    </script>
+</body>
+</html>
