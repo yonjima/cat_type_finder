@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter OGP Debug - 猫タイプ診断</title>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #15202b;
+            color: #ffffff;
+            padding: 20px;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .debug-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #1d2732;
+            border-radius: 16px;
+            padding: 24px;
+        }
+        
+        .twitter-card-preview {
+            background: #000000;
+            border: 1px solid #2f3336;
+            border-radius: 16px;
+            padding: 16px;
+            margin: 20px 0;
+            max-width: 504px;
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 252px;
+            background: #f0f0f0;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            object-fit: cover;
+        }
+        
+        .card-domain {
+            color: #8b98a5;
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+        
+        .card-title {
+            color: #e7e9ea;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        
+        .card-description {
+            color: #8b98a5;
+            font-size: 15px;
+            line-height: 1.3;
+        }
+        
+        .debug-section {
+            margin: 24px 0;
+            padding: 16px;
+            background: #253341;
+            border-radius: 8px;
+        }
+        
+        .debug-title {
+            color: #1d9bf0;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        
+        .debug-item {
+            margin: 8px 0;
+        }
+        
+        .debug-label {
+            color: #8b98a5;
+            font-weight: 500;
+            display: inline-block;
+            width: 200px;
+        }
+        
+        .debug-value {
+            color: #e7e9ea;
+            font-family: 'Consolas', 'Courier New', monospace;
+            background: #0f1419;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .test-urls {
+            background: #1a2332;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        .test-url {
+            display: block;
+            color: #1d9bf0;
+            text-decoration: none;
+            padding: 8px 12px;
+            margin: 4px 0;
+            background: #0f1419;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .test-url:hover {
+            background: #253341;
+        }
+        
+        .checklist {
+            background: #192734;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        .checklist-item {
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .checklist-item input {
+            margin-right: 8px;
+        }
+        
+        .status-good { color: #1d9bf0; }
+        .status-warning { color: #f7931e; }
+        .status-error { color: #f4212e; }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1>🐾 Twitter OGP Debug - 猫タイプ診断</h1>
+        
+        <div class="debug-section">
+            <div class="debug-title">📊 現在のOGP設定</div>
+            <div class="debug-item">
+                <span class="debug-label">タイトル:</span>
+                <span class="debug-value">🐾 猫タイプ診断</span>
+            </div>
+            <div class="debug-item">
+                <span class="debug-label">説明:</span>
+                <span class="debug-value">7つの質問であなたにぴったりの猫タイプを診断！ラグドール、シャム、ベンガルなど21種類の猫種から最適なマッチを見つけて、あなたの性格に合った猫ちゃんを発見しましょう🐱</span>
+            </div>
+            <div class="debug-item">
+                <span class="debug-label">画像URL:</span>
+                <span class="debug-value">https://opengraph.b-cdn.net/production/images/068fa74e-d125-4cb0-8aa0-b04a18f885d4.jpg?token=c5_T0obrUKgp9HW2XRyxiaj5-v2QGEutWjyiBb-e_BQ&height=630&width=1200&expires=33291005615</span>
+            </div>
+            <div class="debug-item">
+                <span class="debug-label">画像サイズ:</span>
+                <span class="debug-value">1200x630px</span>
+            </div>
+            <div class="debug-item">
+                <span class="debug-label">サイトURL:</span>
+                <span class="debug-value">https://yonjima.github.io/cat_type_finder/</span>
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">🔍 Twitterカード期待値プレビュー</div>
+            <div class="twitter-card-preview">
+                <img src="https://opengraph.b-cdn.net/production/images/068fa74e-d125-4cb0-8aa0-b04a18f885d4.jpg?token=c5_T0obrUKgp9HW2XRyxiaj5-v2QGEutWjyiBb-e_BQ&height=630&width=1200&expires=33291005615" 
+                     alt="猫タイプ診断" class="card-image">
+                <div class="card-domain">yonjima.github.io</div>
+                <div class="card-title">🐾 猫タイプ診断</div>
+                <div class="card-description">7つの質問であなたにぴったりの猫タイプを診断！ラグドール、シャム、ベンガルなど21種類の猫種から最適なマッチを見つけて、あなたの性格に合った猫ちゃんを発見しましょう🐱</div>
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">🛠️ テスト用ツール</div>
+            <div class="test-urls">
+                <a href="https://cards-dev.twitter.com/validator" target="_blank" class="test-url">
+                    📝 Twitter Card Validator
+                </a>
+                <a href="https://developers.facebook.com/tools/debug/" target="_blank" class="test-url">
+                    📘 Facebook Sharing Debugger
+                </a>
+                <a href="https://www.linkedin.com/post-inspector/" target="_blank" class="test-url">
+                    💼 LinkedIn Post Inspector
+                </a>
+                <a href="https://cog-creators.github.io/discord-embed-sandbox/" target="_blank" class="test-url">
+                    🎮 Discord Embed Sandbox
+                </a>
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">✅ トラブルシューティング チェックリスト</div>
+            <div class="checklist">
+                <div class="checklist-item">
+                    <input type="checkbox" id="check1">
+                    <label for="check1">robots.txtでTwitterbotを許可済み <span class="status-good">✓</span></label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check2">
+                    <label for="check2">OGP画像URLが正しくアクセス可能</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check3">
+                    <label for="check2">画像サイズが1200x630px（推奨）</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check4">
+                    <label for="check4">twitter:card が summary_large_image に設定済み</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check5">
+                    <label for="check5">HTTPSでアクセス可能</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check6">
+                    <label for="check6">Twitter Card Validatorでテスト済み</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">⚠️ よくある問題と解決策</div>
+            <ul>
+                <li><strong>画像が表示されない:</strong>
+                    <ul>
+                        <li>画像URLが直接アクセス可能か確認</li>
+                        <li>画像サイズが5MB以下であることを確認</li>
+                        <li>CDN画像のトークンが有効か確認</li>
+                    </ul>
+                </li>
+                <li><strong>キャッシュ問題:</strong>
+                    <ul>
+                        <li>TwitterはOGPを長時間キャッシュします</li>
+                        <li>URL末尾に ?v=1 などを付けて再投稿</li>
+                        <li>Twitter Card Validatorでキャッシュクリア</li>
+                    </ul>
+                </li>
+                <li><strong>CDN画像の問題:</strong>
+                    <ul>
+                        <li>opengraph.b-cdn.net の可用性を確認</li>
+                        <li>トークンの有効期限を確認 (expires=33291005615)</li>
+                        <li>必要に応じて自サーバーの画像に変更</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">🔧 推奨アクション</div>
+            <ol>
+                <li><strong>Twitter Card Validator でテスト:</strong><br>
+                    <code>https://yonjima.github.io/cat_type_finder/</code> を入力してテスト
+                </li>
+                <li><strong>画像直接アクセステスト:</strong><br>
+                    OGP画像URLに直接アクセスして表示されるか確認
+                </li>
+                <li><strong>キャッシュクリア:</strong><br>
+                    URL末尾に <code>?v=2</code> を付けて再投稿
+                </li>
+                <li><strong>自前画像への切り替え（推奨）:</strong><br>
+                    CDN依存を避けるため、GitHub Pages上の画像を使用
+                </li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        // 画像読み込みテスト
+        const img = new Image();
+        img.onload = function() {
+            console.log('✅ OGP画像の読み込み成功');
+        };
+        img.onerror = function() {
+            console.error('❌ OGP画像の読み込み失敗');
+            alert('⚠️ OGP画像にアクセスできません。CDNの問題の可能性があります。');
+        };
+        img.src = 'https://opengraph.b-cdn.net/production/images/068fa74e-d125-4cb0-8aa0-b04a18f885d4.jpg?token=c5_T0obrUKgp9HW2XRyxiaj5-v2QGEutWjyiBb-e_BQ&height=630&width=1200&expires=33291005615';
+    </script>
+</body>
+</html>

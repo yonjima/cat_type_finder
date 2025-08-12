@@ -1,0 +1,57 @@
+User-agent: *
+Allow: /
+
+# OGP画像のアクセスを明示的に許可
+Allow: /ogp-image.jpg
+Allow: /images/
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.webp
+
+# TwitterBot専用の設定
+User-agent: Twitterbot
+Allow: /
+Allow: /ogp-image.jpg
+Allow: /images/
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.webp
+
+# FacebookBot専用の設定  
+User-agent: facebookexternalhit
+Allow: /
+Allow: /ogp-image.jpg
+Allow: /images/
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.webp
+
+# Discord Bot専用の設定
+User-agent: Discordbot
+Allow: /
+Allow: /ogp-image.jpg
+Allow: /images/
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.webp
+
+# その他のSNSボット
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: SkypeBot
+Allow: /
+
+# サイトマップの場所
+Sitemap: https://yonjima.github.io/cat_type_finder/sitemap.xml
