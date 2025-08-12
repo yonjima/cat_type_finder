@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(start:*)",
+      "Bash(cmd /c start:*)",
+      "Bash(explorer:*)",
+      "Bash(ls:*)"
+    ],
+    "deny": []
+  }
+}
